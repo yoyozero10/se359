@@ -1,0 +1,1005 @@
+Dưới đây là **todo-list đầy đủ, chia nhỏ theo thứ tự làm thực tế** cho dự án của bạn, theo hướng:
+
+**FastAPI Full Stack Template + Docker + GitHub Actions + Kubernetes + Monitoring/Logging**
+
+Mình sẽ sắp theo kiểu:
+
+* làm từ dễ đến khó
+* biết rõ việc nào làm trước
+* mỗi việc đều có “kết quả cần đạt”
+* rất hợp để chia nhóm hoặc tự theo dõi tiến độ
+
+---
+
+# 1. Giai đoạn 0 — Chốt phạm vi dự án
+
+## 1.1. Chốt tên đề tài
+
+[ ] Chọn tên chính thức cho đồ án
+[ ] Viết mô tả 2–3 câu về dự án
+[ ] Chốt domain bài toán: **quản lý task / bug / incident cho nhóm dev**
+
+**Kết quả cần có:**
+
+* tên đồ án
+* mô tả ngắn
+* mục tiêu dự án
+
+---
+
+## 1.2. Chốt phạm vi tính năng
+
+[ ] Liệt kê tính năng bắt buộc
+[ ] Liệt kê tính năng bonus
+[ ] Quyết định phần nào làm để demo, phần nào chỉ mô tả
+
+**Tính năng bắt buộc nên có:**
+[ ] Đăng nhập
+[ ] Quản lý project
+[ ] Tạo task
+[ ] Tạo bug
+[ ] Tạo incident
+[ ] Cập nhật trạng thái
+[ ] Gán người phụ trách
+[ ] Xem danh sách task/bug/incident
+[ ] Trang hiển thị trạng thái hệ thống
+
+**Tính năng bonus:**
+[ ] Dashboard thống kê
+[ ] Hiển thị version/commit SHA
+[ ] Lịch sử deploy
+[ ] Rollback demo
+[ ] Dashboard DORA
+
+**Kết quả cần có:**
+
+* 1 danh sách scope rõ ràng
+* tránh làm lan man
+
+---
+
+## 1.3. Chốt công nghệ sử dụng
+
+[ ] Ghi rõ stack công nghệ trong báo cáo
+
+**Stack đề xuất:**
+[ ] Backend: FastAPI
+[ ] Frontend: React
+[ ] DB: PostgreSQL
+[ ] Container: Docker, Docker Compose
+[ ] CI/CD: GitHub Actions
+[ ] Registry: GitHub Container Registry
+[ ] Orchestration: Kubernetes (kind hoặc minikube)
+[ ] Monitoring: Prometheus + Grafana
+[ ] Logging: Loki
+[ ] Security scan: Trivy
+
+**Kết quả cần có:**
+
+* 1 mục “Công nghệ sử dụng” để đưa vào báo cáo/slides
+
+---
+
+# 2. Giai đoạn 1 — Khởi tạo dự án và chạy được local
+
+## 2.1. Clone và chạy thử template
+
+[ ] Fork repo FastAPI template về GitHub cá nhân / GitHub nhóm
+[ ] Clone repo về máy
+[ ] Đọc README của repo
+[ ] Cài các yêu cầu cần thiết: Docker, Docker Compose, Git, Node nếu cần
+[ ] Chạy project theo hướng dẫn chính thức
+[ ] Kiểm tra frontend chạy được
+[ ] Kiểm tra backend API chạy được
+[ ] Kiểm tra database hoạt động
+
+**Kết quả cần có:**
+
+* project chạy local thành công
+* biết URL frontend/backend
+* chụp màn hình làm bằng chứng
+
+---
+
+## 2.2. Hiểu cấu trúc source code
+
+[ ] Xem thư mục backend
+[ ] Xem thư mục frontend
+[ ] Xem thư mục docker / compose
+[ ] Xem file cấu hình môi trường `.env`
+[ ] Tìm nơi khai báo models
+[ ] Tìm nơi khai báo API routes
+[ ] Tìm nơi frontend gọi API
+[ ] Tìm nơi cấu hình database
+
+**Kết quả cần có:**
+
+* biết file nào sửa backend
+* biết file nào sửa frontend
+* biết file nào chạy container
+
+---
+
+## 2.3. Đổi nhận diện dự án
+
+[ ] Đổi tên project trong README
+[ ] Đổi tiêu đề frontend
+[ ] Đổi logo/text hiển thị trên UI
+[ ] Cập nhật mô tả dự án trong repo
+[ ] Viết README mới theo đề tài của bạn
+
+**Kết quả cần có:**
+
+* repo không còn cảm giác là template gốc
+* nhìn vào là thấy đúng đồ án của nhóm
+
+---
+
+# 3. Giai đoạn 2 — Thiết kế nghiệp vụ và dữ liệu
+
+## 3.1. Thiết kế các thực thể chính
+
+[ ] Xác định các entity cần có
+[ ] Vẽ sơ đồ quan hệ dữ liệu đơn giản
+
+**Entity đề xuất:**
+[ ] User
+[ ] Project
+[ ] Task
+[ ] Bug
+[ ] Incident
+[ ] ActivityLog
+[ ] DeploymentInfo
+
+**Kết quả cần có:**
+
+* sơ đồ ERD đơn giản
+* biết mỗi bảng có những cột gì
+
+---
+
+## 3.2. Thiết kế chi tiết từng bảng
+
+### Project
+
+[ ] id
+[ ] name
+[ ] description
+[ ] created_at
+
+### Task
+
+[ ] id
+[ ] title
+[ ] description
+[ ] status
+[ ] priority
+[ ] assignee_id
+[ ] project_id
+[ ] created_at
+[ ] updated_at
+
+### Bug
+
+[ ] id
+[ ] title
+[ ] description
+[ ] severity
+[ ] status
+[ ] assignee_id
+[ ] project_id
+[ ] created_at
+[ ] updated_at
+
+### Incident
+
+[ ] id
+[ ] title
+[ ] description
+[ ] severity
+[ ] status
+[ ] opened_at
+[ ] resolved_at
+[ ] assignee_id
+[ ] project_id
+
+### ActivityLog
+
+[ ] id
+[ ] entity_type
+[ ] entity_id
+[ ] action
+[ ] user_id
+[ ] timestamp
+
+### DeploymentInfo
+
+[ ] id
+[ ] version
+[ ] commit_sha
+[ ] deployed_at
+[ ] environment
+[ ] status
+
+**Kết quả cần có:**
+
+* danh sách bảng/cột để bắt đầu code model
+
+---
+
+## 3.3. Chốt luồng nghiệp vụ
+
+[ ] Người dùng đăng nhập
+[ ] Tạo project
+[ ] Tạo task/bug/incident
+[ ] Gán người xử lý
+[ ] Đổi trạng thái
+[ ] Ghi log hoạt động
+[ ] Xem dashboard và tình trạng hệ thống
+
+**Kết quả cần có:**
+
+* biết demo câu chuyện gì khi báo cáo
+
+---
+
+# 4. Giai đoạn 3 — Phát triển backend
+
+## 4.1. Tạo models
+
+[ ] Tạo model `Project`
+[ ] Tạo model `Task`
+[ ] Tạo model `Bug`
+[ ] Tạo model `Incident`
+[ ] Tạo model `ActivityLog`
+[ ] Tạo model `DeploymentInfo`
+
+**Kết quả cần có:**
+
+* backend có đủ model cho domain mới
+
+---
+
+## 4.2. Tạo migration database
+
+[ ] Tạo migration cho từng bảng
+[ ] Chạy migration
+[ ] Kiểm tra bảng đã được tạo trong PostgreSQL
+[ ] Fix lỗi migration nếu có
+
+**Kết quả cần có:**
+
+* database schema chạy ổn định
+
+---
+
+## 4.3. Tạo schema / validation
+
+[ ] Tạo request schema cho create/update Project
+[ ] Tạo request schema cho create/update Task
+[ ] Tạo request schema cho create/update Bug
+[ ] Tạo request schema cho create/update Incident
+[ ] Tạo response schema cho các entity
+
+**Kết quả cần có:**
+
+* API nhận dữ liệu đúng định dạng
+* validate rõ ràng
+
+---
+
+## 4.4. Tạo API CRUD
+
+### Project API
+
+[ ] API tạo project
+[ ] API lấy danh sách project
+[ ] API lấy chi tiết project
+[ ] API cập nhật project
+[ ] API xóa project
+
+### Task API
+
+[ ] API tạo task
+[ ] API lấy danh sách task
+[ ] API lọc theo project
+[ ] API lọc theo status
+[ ] API cập nhật task
+[ ] API đổi trạng thái task
+[ ] API xóa task
+
+### Bug API
+
+[ ] API tạo bug
+[ ] API lấy danh sách bug
+[ ] API cập nhật bug
+[ ] API đổi trạng thái bug
+[ ] API xóa bug
+
+### Incident API
+
+[ ] API tạo incident
+[ ] API lấy danh sách incident
+[ ] API cập nhật incident
+[ ] API resolve incident
+[ ] API xóa incident
+
+**Kết quả cần có:**
+
+* backend đủ endpoint để frontend dùng
+
+---
+
+## 4.5. Ghi activity log
+
+[ ] Khi tạo task thì ghi log
+[ ] Khi đổi trạng thái thì ghi log
+[ ] Khi tạo bug thì ghi log
+[ ] Khi tạo incident thì ghi log
+[ ] Khi resolve incident thì ghi log
+
+**Kết quả cần có:**
+
+* có dữ liệu minh họa feedback loop và audit trail
+
+---
+
+## 4.6. Thêm endpoint phục vụ DevOps
+
+[ ] Tạo `/healthz`
+[ ] Tạo `/readyz`
+[ ] Tạo `/version`
+[ ] Tạo `/metrics`
+
+**Giải thích ngắn:**
+
+* `/healthz`: app còn sống không
+* `/readyz`: app sẵn sàng nhận request chưa
+* `/version`: đang chạy commit/version nào
+* `/metrics`: Prometheus scrape metrics
+
+**Kết quả cần có:**
+
+* sẵn sàng cho Kubernetes + monitoring
+
+---
+
+# 5. Giai đoạn 4 — Phát triển frontend
+
+## 5.1. Khảo sát UI hiện có
+
+[ ] Xem UI hiện tại của template
+[ ] Xác định trang nào giữ lại
+[ ] Xác định trang nào đổi tên/sửa chức năng
+
+**Kết quả cần có:**
+
+* biết rõ cần sửa phần nào ở frontend
+
+---
+
+## 5.2. Xây màn hình chính
+
+[ ] Trang login
+[ ] Trang dashboard
+[ ] Trang danh sách project
+[ ] Trang danh sách task
+[ ] Trang danh sách bug
+[ ] Trang danh sách incident
+[ ] Form tạo mới
+[ ] Form chỉnh sửa
+[ ] Trang system status
+
+**Kết quả cần có:**
+
+* demo được luồng người dùng hoàn chỉnh
+
+---
+
+## 5.3. Kết nối API
+
+[ ] Gọi API lấy project
+[ ] Gọi API tạo task
+[ ] Gọi API cập nhật task
+[ ] Gọi API lấy bug
+[ ] Gọi API lấy incident
+[ ] Gọi API resolve incident
+[ ] Hiển thị lỗi khi API fail
+[ ] Hiển thị loading state
+
+**Kết quả cần có:**
+
+* frontend chạy thật, không hardcode dữ liệu
+
+---
+
+## 5.4. Tạo dashboard cơ bản
+
+[ ] Đếm số project
+[ ] Đếm số task theo trạng thái
+[ ] Đếm số bug mở
+[ ] Đếm số incident đang mở
+[ ] Hiển thị version app
+[ ] Hiển thị commit SHA
+[ ] Hiển thị thời gian deploy gần nhất
+
+**Kết quả cần có:**
+
+* có UI đẹp để demo vận hành
+
+---
+
+# 6. Giai đoạn 5 — Hoàn thiện Docker
+
+## 6.1. Hiểu Docker setup hiện có
+
+[ ] Xem Dockerfile backend
+[ ] Xem Dockerfile frontend
+[ ] Xem `docker-compose.yml`
+[ ] Xem các biến môi trường
+
+**Kết quả cần có:**
+
+* hiểu app đang chạy bằng những container nào
+
+---
+
+## 6.2. Tối ưu container
+
+[ ] Kiểm tra image backend build được
+[ ] Kiểm tra image frontend build được
+[ ] Tối ưu Dockerfile nếu cần
+[ ] Dùng `.dockerignore` hợp lý
+[ ] Kiểm tra volume cho database
+[ ] Kiểm tra restart policy
+
+**Kết quả cần có:**
+
+* container chạy ổn, build không lỗi
+
+---
+
+## 6.3. Kiểm tra local bằng Compose
+
+[ ] `docker compose up` chạy thành công
+[ ] Backend truy cập được
+[ ] Frontend truy cập được
+[ ] DB kết nối ổn
+[ ] Tạo thử dữ liệu
+[ ] Restart container không mất dữ liệu quan trọng
+
+**Kết quả cần có:**
+
+* môi trường local sẵn sàng để demo
+
+---
+
+# 7. Giai đoạn 6 — Viết test
+
+## 7.1. Backend test
+
+[ ] Test tạo project
+[ ] Test tạo task
+[ ] Test cập nhật trạng thái task
+[ ] Test tạo bug
+[ ] Test tạo incident
+[ ] Test resolve incident
+[ ] Test `/healthz`
+[ ] Test `/version`
+
+**Kết quả cần có:**
+
+* có test để CI chạy
+
+---
+
+## 7.2. Frontend test
+
+[ ] Test render màn hình chính
+[ ] Test form tạo task
+[ ] Test hiển thị lỗi
+[ ] Test gọi API mock
+
+**Kết quả cần có:**
+
+* pipeline không chỉ build mà còn có kiểm tra chất lượng
+
+---
+
+# 8. Giai đoạn 7 — Thiết lập CI bằng GitHub Actions
+
+## 8.1. Khảo sát workflow có sẵn
+
+[ ] Xem file workflow hiện tại
+[ ] Hiểu job nào đang chạy
+[ ] Quyết định giữ lại hay sửa
+
+---
+
+## 8.2. Hoàn thiện pipeline CI cho Pull Request
+
+[ ] Trigger khi mở PR
+[ ] Cài dependencies backend
+[ ] Cài dependencies frontend
+[ ] Chạy lint backend
+[ ] Chạy lint frontend
+[ ] Chạy backend tests
+[ ] Chạy frontend tests
+[ ] Build Docker images
+[ ] Fail pipeline nếu có lỗi
+
+**Kết quả cần có:**
+
+* mỗi PR đều được kiểm tra tự động
+
+---
+
+## 8.3. Thêm security scan
+
+[ ] Cài Trivy vào workflow
+[ ] Scan source code
+[ ] Scan Docker image
+[ ] Thiết lập fail khi có lỗi nghiêm trọng nếu cần
+[ ] Lưu report scan
+
+**Kết quả cần có:**
+
+* có phần security trong DevOps pipeline
+
+---
+
+# 9. Giai đoạn 8 — Thiết lập CD
+
+## 9.1. Chuẩn bị container registry
+
+[ ] Dùng GitHub Container Registry
+[ ] Kiểm tra quyền push image
+[ ] Chọn naming convention cho image tag
+
+**Tag gợi ý:**
+[ ] `latest`
+[ ] `commit-sha`
+[ ] `v1.0.0` nếu muốn demo release
+
+---
+
+## 9.2. Workflow CD cho nhánh main
+
+[ ] Trigger khi merge vào `main`
+[ ] Build image backend
+[ ] Build image frontend
+[ ] Tag image theo commit SHA
+[ ] Push image lên registry
+[ ] Ghi lại thông tin release
+
+**Kết quả cần có:**
+
+* có image mới mỗi lần merge main
+
+---
+
+## 9.3. Smoke test sau deploy
+
+[ ] Gọi `/healthz`
+[ ] Gọi `/version`
+[ ] Kiểm tra frontend truy cập được
+[ ] Kiểm tra DB connection ổn
+[ ] Báo lỗi nếu smoke test fail
+
+**Kết quả cần có:**
+
+* pipeline có xác nhận sau deploy
+
+---
+
+# 10. Giai đoạn 9 — Triển khai Kubernetes
+
+## 10.1. Chọn môi trường cluster local
+
+[ ] Chọn `kind` hoặc `minikube`
+[ ] Cài cluster local
+[ ] Tạo cluster thử
+[ ] Dùng `kubectl get nodes` kiểm tra hoạt động
+
+**Kết quả cần có:**
+
+* có cluster local sẵn sàng deploy
+
+---
+
+## 10.2. Chuẩn bị manifest cơ bản
+
+[ ] Tạo `namespace` riêng cho dự án
+[ ] Tạo `deployment` cho backend
+[ ] Tạo `deployment` cho frontend
+[ ] Tạo `service` cho backend
+[ ] Tạo `service` cho frontend
+[ ] Tạo `configmap`
+[ ] Tạo `secret`
+[ ] Tạo manifest cho PostgreSQL nếu cần
+[ ] Tạo `ingress` nếu muốn truy cập đẹp hơn
+
+**Kết quả cần có:**
+
+* đầy đủ YAML cơ bản để deploy app
+
+---
+
+## 10.3. Deploy lên cluster
+
+[ ] Apply namespace
+[ ] Apply configmap/secret
+[ ] Apply postgres
+[ ] Apply backend
+[ ] Apply frontend
+[ ] Apply service
+[ ] Kiểm tra pod running
+[ ] Kiểm tra logs
+[ ] Kiểm tra app truy cập được
+
+**Kết quả cần có:**
+
+* app chạy trên Kubernetes
+
+---
+
+## 10.4. Kiểm tra rollout / rollback
+
+[ ] Thử update image mới
+[ ] Quan sát rolling update
+[ ] Cố tình deploy version lỗi
+[ ] Dùng rollback để quay về version cũ
+[ ] Chụp màn hình hoặc quay video demo
+
+**Kết quả cần có:**
+
+* có nội dung rất mạnh để thuyết trình
+
+---
+
+# 11. Giai đoạn 10 — Monitoring với Prometheus và Grafana
+
+## 11.1. Chuẩn bị metrics
+
+[ ] Chọn thư viện metrics cho FastAPI
+[ ] Expose `/metrics` đúng format Prometheus
+[ ] Đảm bảo endpoint hoạt động
+
+---
+
+## 11.2. Cài Prometheus
+
+[ ] Deploy Prometheus
+[ ] Cấu hình scrape backend
+[ ] Kiểm tra Prometheus đã lấy metrics chưa
+
+---
+
+## 11.3. Cài Grafana
+
+[ ] Deploy Grafana
+[ ] Kết nối datasource Prometheus
+[ ] Import/tạo dashboard
+
+---
+
+## 11.4. Tạo dashboard giám sát
+
+[ ] Request count
+[ ] Error count
+[ ] Response time
+[ ] CPU container
+[ ] Memory container
+[ ] Số incident mở
+[ ] Số bug mở
+[ ] Version đang chạy
+
+**Kết quả cần có:**
+
+* dashboard đủ đẹp để demo feedback loop
+
+---
+
+# 12. Giai đoạn 11 — Logging với Loki
+
+## 12.1. Chuẩn hóa log ứng dụng
+
+[ ] Log request vào backend
+[ ] Log error vào backend
+[ ] Log tạo task/bug/incident
+[ ] Log deploy event
+[ ] Log resolve incident
+
+---
+
+## 12.2. Cài Loki và agent thu log
+
+[ ] Deploy Loki
+[ ] Cài promtail hoặc agent tương đương
+[ ] Cấu hình thu log container/pod
+[ ] Kiểm tra log đã vào Loki
+
+---
+
+## 12.3. Kết nối Grafana với Loki
+
+[ ] Add datasource Loki
+[ ] Tạo panel xem log
+[ ] Filter theo service
+[ ] Filter theo level
+[ ] Filter theo incident/task id nếu có
+
+**Kết quả cần có:**
+
+* có logging tập trung để trình bày vận hành phần mềm
+
+---
+
+# 13. Giai đoạn 12 — DORA metrics
+
+## 13.1. Xác định cách đo
+
+[ ] Chốt 4 chỉ số DORA sẽ demo
+[ ] Xác định nguồn dữ liệu cho từng chỉ số
+
+**4 chỉ số nên dùng:**
+[ ] Deployment Frequency
+[ ] Lead Time for Changes
+[ ] Change Failure Rate
+[ ] MTTR
+
+---
+
+## 13.2. Thu thập dữ liệu
+
+[ ] Ghi thời gian merge PR
+[ ] Ghi thời gian deploy thành công
+[ ] Ghi số lần deploy fail
+[ ] Ghi thời gian bắt đầu incident
+[ ] Ghi thời gian resolve incident
+
+---
+
+## 13.3. Hiển thị DORA
+
+[ ] Tạo bảng tổng hợp
+[ ] Hoặc tạo dashboard đơn giản
+[ ] Hoặc chèn dữ liệu vào báo cáo/slides
+
+**Kết quả cần có:**
+
+* có phần phân tích hiệu quả vận hành rất sát yêu cầu môn
+
+---
+
+# 14. Giai đoạn 13 — Bảo mật và chất lượng
+
+## 14.1. Secret/config
+
+[ ] Không hardcode password
+[ ] Dùng `.env` cho local
+[ ] Dùng Secret trên Kubernetes
+[ ] Kiểm tra file `.gitignore`
+
+---
+
+## 14.2. Chất lượng mã nguồn
+
+[ ] Format code backend
+[ ] Format code frontend
+[ ] Xóa code thừa
+[ ] Đặt tên rõ ràng
+[ ] Viết comment ở chỗ phức tạp
+[ ] Làm README rõ ràng
+
+---
+
+## 14.3. Kiểm tra lỗi phổ biến
+
+[ ] App restart có lỗi không
+[ ] DB migration có ổn không
+[ ] Tạo mới task/bug/incident có lỗi không
+[ ] Deploy lại có ổn không
+[ ] Rollback có chạy không
+[ ] Metrics/logging còn hoạt động không
+
+---
+
+# 15. Giai đoạn 14 — Viết tài liệu dự án
+
+## 15.1. README trên GitHub
+
+[ ] Giới thiệu dự án
+[ ] Mục tiêu
+[ ] Công nghệ sử dụng
+[ ] Hướng dẫn chạy local
+[ ] Hướng dẫn chạy Docker Compose
+[ ] Hướng dẫn CI/CD
+[ ] Hướng dẫn deploy Kubernetes
+[ ] Hướng dẫn monitoring/logging
+[ ] Hình ảnh minh họa
+
+---
+
+## 15.2. Báo cáo môn học
+
+[ ] Mở đầu
+[ ] Mục tiêu môn học liên hệ với dự án
+[ ] Phân tích yêu cầu
+[ ] Kiến trúc hệ thống
+[ ] Công nghệ sử dụng
+[ ] Thiết kế cơ sở dữ liệu
+[ ] Thiết kế CI/CD
+[ ] Thiết kế Kubernetes
+[ ] Monitoring/logging
+[ ] DORA metrics
+[ ] Kết quả đạt được
+[ ] Khó khăn và hướng phát triển
+
+---
+
+# 16. Giai đoạn 15 — Chuẩn bị demo và thuyết trình
+
+## 16.1. Chuẩn bị kịch bản demo
+
+[ ] Giới thiệu bài toán
+[ ] Giới thiệu kiến trúc
+[ ] Chạy app local hoặc K8s
+[ ] Tạo project
+[ ] Tạo task
+[ ] Tạo bug
+[ ] Tạo incident
+[ ] Xem dashboard
+[ ] Xem metrics trên Grafana
+[ ] Xem logs trên Loki
+[ ] Trigger pipeline CI/CD
+[ ] Deploy version mới
+[ ] Demo rollback
+
+**Kết quả cần có:**
+
+* demo liền mạch, không bị lúng túng
+
+---
+
+## 16.2. Chuẩn bị slide
+
+[ ] Slide 1: tên đề tài
+[ ] Slide 2: mục tiêu
+[ ] Slide 3: kiến trúc tổng thể
+[ ] Slide 4: công nghệ
+[ ] Slide 5: quy trình CI/CD
+[ ] Slide 6: Docker và Kubernetes
+[ ] Slide 7: monitoring/logging
+[ ] Slide 8: DORA metrics
+[ ] Slide 9: demo kết quả
+[ ] Slide 10: kết luận
+
+---
+
+## 16.3. Chuẩn bị phương án dự phòng
+
+[ ] Quay sẵn video demo
+[ ] Chụp màn hình pipeline thành công
+[ ] Chụp màn hình Grafana
+[ ] Chụp màn hình logs
+[ ] Chụp màn hình Kubernetes pods
+[ ] Chuẩn bị dữ liệu mẫu
+
+---
+
+# 17. Checklist “hoàn thành tối thiểu để nộp”
+
+Nếu sắp hết thời gian, hãy ưu tiên hoàn thành các mục này trước:
+
+[ ] App chạy local bằng Docker Compose
+[ ] Có CRUD cơ bản cho Project/Task/Bug/Incident
+[ ] Có test cơ bản
+[ ] Có GitHub Actions chạy lint/test/build
+[ ] Có build và push Docker image
+[ ] Có deploy lên Kubernetes local
+[ ] Có `/healthz` và `/metrics`
+[ ] Có Prometheus + Grafana
+[ ] Có logging cơ bản
+[ ] Có README và slide báo cáo
+
+Chỉ cần làm chắc 10 mục này là dự án đã khá ổn.
+
+---
+
+# 18. Checklist “để ăn điểm cao”
+
+[ ] Có rollback demo
+[ ] Có Trivy scan
+[ ] Có dashboard đẹp
+[ ] Có version/commit SHA trên UI
+[ ] Có activity log
+[ ] Có DORA metrics
+[ ] Có phân chia công việc nhóm rõ
+[ ] Có video demo dự phòng
+[ ] Có báo cáo liên hệ trực tiếp với CALMS, CI/CD, IaC, feedback loop
+
+---
+
+# 19. Lịch làm gợi ý trong 3 tuần
+
+## Tuần 1
+
+[ ] Chốt đề tài
+[ ] Clone và chạy template
+[ ] Đổi nhận diện
+[ ] Thiết kế database
+[ ] Làm backend CRUD cơ bản
+[ ] Làm frontend cơ bản
+
+## Tuần 2
+
+[ ] Docker Compose hoàn chỉnh
+[ ] Viết test
+[ ] Hoàn thiện GitHub Actions CI
+[ ] Thêm Trivy
+[ ] Thêm `/healthz`, `/readyz`, `/version`, `/metrics`
+
+## Tuần 3
+
+[ ] Deploy Kubernetes
+[ ] Prometheus + Grafana + Loki
+[ ] Dashboard
+[ ] DORA metrics
+[ ] README, báo cáo, slide, demo
+
+---
+
+# 20. Cách chia việc nếu nhóm 4 người
+
+## Người 1 — Backend
+
+[ ] Models
+[ ] Migration
+[ ] API CRUD
+[ ] Healthcheck
+[ ] Metrics
+
+## Người 2 — Frontend
+
+[ ] Dashboard
+[ ] Form CRUD
+[ ] Gọi API
+[ ] Hiển thị version/status
+
+## Người 3 — CI/CD + Docker
+
+[ ] Dockerfile
+[ ] Compose
+[ ] GitHub Actions
+[ ] Build/push image
+[ ] Trivy scan
+
+## Người 4 — Kubernetes + Observability
+
+[ ] kind/minikube
+[ ] K8s manifests
+[ ] Deploy/rollback
+[ ] Prometheus
+[ ] Grafana
+[ ] Loki
+
+---
+
+# 21. Thứ tự làm ngắn gọn nhất
+
+Nếu bạn muốn nhớ cực ngắn, cứ theo thứ tự này:
+
+[ ] Chạy được template
+[ ] Đổi thành đề tài của mình
+[ ] Làm CRUD project/task/bug/incident
+[ ] Chạy ổn bằng Docker Compose
+[ ] Viết test
+[ ] Làm CI bằng GitHub Actions
+[ ] Build/push image
+[ ] Deploy lên Kubernetes
+[ ] Thêm monitoring/logging
+[ ] Làm dashboard + DORA
+[ ] Viết README + slide + demo
+
+---
