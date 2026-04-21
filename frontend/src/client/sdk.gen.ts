@@ -3,7 +3,351 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, PrivateCreateUserData, PrivateCreateUserResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse } from './types.gen';
+import type { ActivityLogsReadActivityLogsData, ActivityLogsReadActivityLogsResponse, BugsReadBugsData, BugsReadBugsResponse, BugsCreateBugData, BugsCreateBugResponse, BugsReadBugData, BugsReadBugResponse, BugsUpdateBugData, BugsUpdateBugResponse, BugsDeleteBugData, BugsDeleteBugResponse, DevopsHealthzResponse, DevopsReadyzResponse, DevopsVersionResponse, DevopsReadDeploymentsData, DevopsReadDeploymentsResponse, IncidentsReadIncidentsData, IncidentsReadIncidentsResponse, IncidentsCreateIncidentData, IncidentsCreateIncidentResponse, IncidentsReadIncidentData, IncidentsReadIncidentResponse, IncidentsUpdateIncidentData, IncidentsUpdateIncidentResponse, IncidentsDeleteIncidentData, IncidentsDeleteIncidentResponse, IncidentsResolveIncidentData, IncidentsResolveIncidentResponse, ItemsReadItemsData, ItemsReadItemsResponse, ItemsCreateItemData, ItemsCreateItemResponse, ItemsReadItemData, ItemsReadItemResponse, ItemsUpdateItemData, ItemsUpdateItemResponse, ItemsDeleteItemData, ItemsDeleteItemResponse, LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, PrivateCreateUserData, PrivateCreateUserResponse, ProjectsReadProjectsData, ProjectsReadProjectsResponse, ProjectsCreateProjectData, ProjectsCreateProjectResponse, ProjectsReadProjectData, ProjectsReadProjectResponse, ProjectsUpdateProjectData, ProjectsUpdateProjectResponse, ProjectsDeleteProjectData, ProjectsDeleteProjectResponse, TasksReadTasksData, TasksReadTasksResponse, TasksCreateTaskData, TasksCreateTaskResponse, TasksReadTaskData, TasksReadTaskResponse, TasksUpdateTaskData, TasksUpdateTaskResponse, TasksDeleteTaskData, TasksDeleteTaskResponse, TasksUpdateTaskStatusData, TasksUpdateTaskStatusResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse } from './types.gen';
+
+export class ActivityLogsService {
+    /**
+     * Read Activity Logs
+     * Lấy lịch sử hoạt động (audit trail). Filter tuỳ chọn theo entity_type.
+     * @param data The data for the request.
+     * @param data.skip
+     * @param data.limit
+     * @param data.entityType
+     * @returns ActivityLogsPublic Successful Response
+     * @throws ApiError
+     */
+    public static readActivityLogs(data: ActivityLogsReadActivityLogsData = {}): CancelablePromise<ActivityLogsReadActivityLogsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/activity-logs/',
+            query: {
+                skip: data.skip,
+                limit: data.limit,
+                entity_type: data.entityType
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+}
+
+export class BugsService {
+    /**
+     * Read Bugs
+     * Lấy danh sách bug, filter theo project_id / status / severity.
+     * @param data The data for the request.
+     * @param data.skip
+     * @param data.limit
+     * @param data.projectId
+     * @param data.status
+     * @param data.severity
+     * @returns BugsPublic Successful Response
+     * @throws ApiError
+     */
+    public static readBugs(data: BugsReadBugsData = {}): CancelablePromise<BugsReadBugsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/bugs/',
+            query: {
+                skip: data.skip,
+                limit: data.limit,
+                project_id: data.projectId,
+                status: data.status,
+                severity: data.severity
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Create Bug
+     * Tạo bug mới.
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns BugPublic Successful Response
+     * @throws ApiError
+     */
+    public static createBug(data: BugsCreateBugData): CancelablePromise<BugsCreateBugResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/bugs/',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Read Bug
+     * Lấy chi tiết bug.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns BugPublic Successful Response
+     * @throws ApiError
+     */
+    public static readBug(data: BugsReadBugData): CancelablePromise<BugsReadBugResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/bugs/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Update Bug
+     * Cập nhật bug.
+     * @param data The data for the request.
+     * @param data.id
+     * @param data.requestBody
+     * @returns BugPublic Successful Response
+     * @throws ApiError
+     */
+    public static updateBug(data: BugsUpdateBugData): CancelablePromise<BugsUpdateBugResponse> {
+        return __request(OpenAPI, {
+            method: 'PATCH',
+            url: '/api/v1/bugs/{id}',
+            path: {
+                id: data.id
+            },
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Delete Bug
+     * Xóa bug.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns Message Successful Response
+     * @throws ApiError
+     */
+    public static deleteBug(data: BugsDeleteBugData): CancelablePromise<BugsDeleteBugResponse> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/v1/bugs/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+}
+
+export class DevopsService {
+    /**
+     * Healthz
+     * Liveness probe — app còn sống không.
+     * @returns unknown Successful Response
+     * @throws ApiError
+     */
+    public static healthz(): CancelablePromise<DevopsHealthzResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/healthz'
+        });
+    }
+    
+    /**
+     * Readyz
+     * Readiness probe — app sẵn sàng nhận request (kiểm tra DB).
+     * @returns unknown Successful Response
+     * @throws ApiError
+     */
+    public static readyz(): CancelablePromise<DevopsReadyzResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/readyz'
+        });
+    }
+    
+    /**
+     * Version
+     * Trả về version và commit SHA đang chạy.
+     * @returns unknown Successful Response
+     * @throws ApiError
+     */
+    public static version(): CancelablePromise<DevopsVersionResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/version'
+        });
+    }
+    
+    /**
+     * Read Deployments
+     * Lịch sử deployment.
+     * @param data The data for the request.
+     * @param data.skip
+     * @param data.limit
+     * @returns DeploymentsPublic Successful Response
+     * @throws ApiError
+     */
+    public static readDeployments(data: DevopsReadDeploymentsData = {}): CancelablePromise<DevopsReadDeploymentsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/deployments',
+            query: {
+                skip: data.skip,
+                limit: data.limit
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+}
+
+export class IncidentsService {
+    /**
+     * Read Incidents
+     * Lấy danh sách incident, filter theo project_id / status.
+     * @param data The data for the request.
+     * @param data.skip
+     * @param data.limit
+     * @param data.projectId
+     * @param data.status
+     * @returns IncidentsPublic Successful Response
+     * @throws ApiError
+     */
+    public static readIncidents(data: IncidentsReadIncidentsData = {}): CancelablePromise<IncidentsReadIncidentsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/incidents/',
+            query: {
+                skip: data.skip,
+                limit: data.limit,
+                project_id: data.projectId,
+                status: data.status
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Create Incident
+     * Tạo incident mới.
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns IncidentPublic Successful Response
+     * @throws ApiError
+     */
+    public static createIncident(data: IncidentsCreateIncidentData): CancelablePromise<IncidentsCreateIncidentResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/incidents/',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Read Incident
+     * Lấy chi tiết incident.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns IncidentPublic Successful Response
+     * @throws ApiError
+     */
+    public static readIncident(data: IncidentsReadIncidentData): CancelablePromise<IncidentsReadIncidentResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/incidents/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Update Incident
+     * Cập nhật incident.
+     * @param data The data for the request.
+     * @param data.id
+     * @param data.requestBody
+     * @returns IncidentPublic Successful Response
+     * @throws ApiError
+     */
+    public static updateIncident(data: IncidentsUpdateIncidentData): CancelablePromise<IncidentsUpdateIncidentResponse> {
+        return __request(OpenAPI, {
+            method: 'PATCH',
+            url: '/api/v1/incidents/{id}',
+            path: {
+                id: data.id
+            },
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Delete Incident
+     * Xóa incident.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns Message Successful Response
+     * @throws ApiError
+     */
+    public static deleteIncident(data: IncidentsDeleteIncidentData): CancelablePromise<IncidentsDeleteIncidentResponse> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/v1/incidents/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Resolve Incident
+     * Resolve incident — ghi thời gian resolved_at.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns IncidentPublic Successful Response
+     * @throws ApiError
+     */
+    public static resolveIncident(data: IncidentsResolveIncidentData): CancelablePromise<IncidentsResolveIncidentResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/incidents/{id}/resolve',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+}
 
 export class ItemsService {
     /**
@@ -228,6 +572,257 @@ export class PrivateService {
             url: '/api/v1/private/users/',
             body: data.requestBody,
             mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+}
+
+export class ProjectsService {
+    /**
+     * Read Projects
+     * Lấy danh sách project.
+     * @param data The data for the request.
+     * @param data.skip
+     * @param data.limit
+     * @returns ProjectsPublic Successful Response
+     * @throws ApiError
+     */
+    public static readProjects(data: ProjectsReadProjectsData = {}): CancelablePromise<ProjectsReadProjectsResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/projects/',
+            query: {
+                skip: data.skip,
+                limit: data.limit
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Create Project
+     * Tạo project mới.
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns ProjectPublic Successful Response
+     * @throws ApiError
+     */
+    public static createProject(data: ProjectsCreateProjectData): CancelablePromise<ProjectsCreateProjectResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/projects/',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Read Project
+     * Lấy chi tiết một project.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns ProjectPublic Successful Response
+     * @throws ApiError
+     */
+    public static readProject(data: ProjectsReadProjectData): CancelablePromise<ProjectsReadProjectResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/projects/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Update Project
+     * Cập nhật project.
+     * @param data The data for the request.
+     * @param data.id
+     * @param data.requestBody
+     * @returns ProjectPublic Successful Response
+     * @throws ApiError
+     */
+    public static updateProject(data: ProjectsUpdateProjectData): CancelablePromise<ProjectsUpdateProjectResponse> {
+        return __request(OpenAPI, {
+            method: 'PATCH',
+            url: '/api/v1/projects/{id}',
+            path: {
+                id: data.id
+            },
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Delete Project
+     * Xóa project.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns Message Successful Response
+     * @throws ApiError
+     */
+    public static deleteProject(data: ProjectsDeleteProjectData): CancelablePromise<ProjectsDeleteProjectResponse> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/v1/projects/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+}
+
+export class TasksService {
+    /**
+     * Read Tasks
+     * Lấy danh sách task, có thể filter theo project_id và status.
+     * @param data The data for the request.
+     * @param data.skip
+     * @param data.limit
+     * @param data.projectId
+     * @param data.status
+     * @returns TasksPublic Successful Response
+     * @throws ApiError
+     */
+    public static readTasks(data: TasksReadTasksData = {}): CancelablePromise<TasksReadTasksResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/tasks/',
+            query: {
+                skip: data.skip,
+                limit: data.limit,
+                project_id: data.projectId,
+                status: data.status
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Create Task
+     * Tạo task mới.
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns TaskPublic Successful Response
+     * @throws ApiError
+     */
+    public static createTask(data: TasksCreateTaskData): CancelablePromise<TasksCreateTaskResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v1/tasks/',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Read Task
+     * Lấy chi tiết task.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns TaskPublic Successful Response
+     * @throws ApiError
+     */
+    public static readTask(data: TasksReadTaskData): CancelablePromise<TasksReadTaskResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/tasks/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Update Task
+     * Cập nhật task.
+     * @param data The data for the request.
+     * @param data.id
+     * @param data.requestBody
+     * @returns TaskPublic Successful Response
+     * @throws ApiError
+     */
+    public static updateTask(data: TasksUpdateTaskData): CancelablePromise<TasksUpdateTaskResponse> {
+        return __request(OpenAPI, {
+            method: 'PATCH',
+            url: '/api/v1/tasks/{id}',
+            path: {
+                id: data.id
+            },
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Delete Task
+     * Xóa task.
+     * @param data The data for the request.
+     * @param data.id
+     * @returns Message Successful Response
+     * @throws ApiError
+     */
+    public static deleteTask(data: TasksDeleteTaskData): CancelablePromise<TasksDeleteTaskResponse> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/v1/tasks/{id}',
+            path: {
+                id: data.id
+            },
+            errors: {
+                422: 'Validation Error'
+            }
+        });
+    }
+    
+    /**
+     * Update Task Status
+     * Đổi trạng thái task nhanh.
+     * @param data The data for the request.
+     * @param data.id
+     * @param data.status
+     * @returns TaskPublic Successful Response
+     * @throws ApiError
+     */
+    public static updateTaskStatus(data: TasksUpdateTaskStatusData): CancelablePromise<TasksUpdateTaskStatusResponse> {
+        return __request(OpenAPI, {
+            method: 'PATCH',
+            url: '/api/v1/tasks/{id}/status',
+            path: {
+                id: data.id
+            },
+            query: {
+                status: data.status
+            },
             errors: {
                 422: 'Validation Error'
             }
