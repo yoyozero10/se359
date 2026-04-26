@@ -21,7 +21,7 @@ export const Route = createFileRoute("/_layout/tasks")({
   head: () => ({
     meta: [
       {
-        title: "Tasks - FastAPI Template",
+        title: "Tasks - DevOps Manager",
       },
     ],
   }),

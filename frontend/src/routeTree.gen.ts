@@ -19,6 +19,8 @@ import { Route as LayoutTasksRouteImport } from './routes/_layout/tasks'
 import { Route as LayoutSettingsRouteImport } from './routes/_layout/settings'
 import { Route as LayoutProjectsRouteImport } from './routes/_layout/projects'
 import { Route as LayoutItemsRouteImport } from './routes/_layout/items'
+import { Route as LayoutBugsRouteImport } from './routes/_layout/bugs'
+import { Route as LayoutIncidentsRouteImport } from './routes/_layout/incidents'
 import { Route as LayoutAdminRouteImport } from './routes/_layout/admin'
 
 const SignupRoute = SignupRouteImport.update({
@@ -70,6 +72,16 @@ const LayoutItemsRoute = LayoutItemsRouteImport.update({
   path: '/items',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutBugsRoute = LayoutBugsRouteImport.update({
+  id: '/bugs',
+  path: '/bugs',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutIncidentsRoute = LayoutIncidentsRouteImport.update({
+  id: '/incidents',
+  path: '/incidents',
+  getParentRoute: () => LayoutRoute,
+} as any)
 const LayoutAdminRoute = LayoutAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -83,6 +95,8 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/admin': typeof LayoutAdminRoute
+  '/bugs': typeof LayoutBugsRoute
+  '/incidents': typeof LayoutIncidentsRoute
   '/items': typeof LayoutItemsRoute
   '/projects': typeof LayoutProjectsRoute
   '/settings': typeof LayoutSettingsRoute
@@ -94,6 +108,8 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/admin': typeof LayoutAdminRoute
+  '/bugs': typeof LayoutBugsRoute
+  '/incidents': typeof LayoutIncidentsRoute
   '/items': typeof LayoutItemsRoute
   '/projects': typeof LayoutProjectsRoute
   '/settings': typeof LayoutSettingsRoute
@@ -108,6 +124,8 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/_layout/admin': typeof LayoutAdminRoute
+  '/_layout/bugs': typeof LayoutBugsRoute
+  '/_layout/incidents': typeof LayoutIncidentsRoute
   '/_layout/items': typeof LayoutItemsRoute
   '/_layout/projects': typeof LayoutProjectsRoute
   '/_layout/settings': typeof LayoutSettingsRoute
@@ -123,6 +141,8 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signup'
     | '/admin'
+    | '/bugs'
+    | '/incidents'
     | '/items'
     | '/projects'
     | '/settings'
@@ -134,6 +154,8 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signup'
     | '/admin'
+    | '/bugs'
+    | '/incidents'
     | '/items'
     | '/projects'
     | '/settings'
@@ -147,6 +169,8 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signup'
     | '/_layout/admin'
+    | '/_layout/bugs'
+    | '/_layout/incidents'
     | '/_layout/items'
     | '/_layout/projects'
     | '/_layout/settings'
@@ -234,6 +258,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutItemsRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/bugs': {
+      id: '/_layout/bugs'
+      path: '/bugs'
+      fullPath: '/bugs'
+      preLoaderRoute: typeof LayoutBugsRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/incidents': {
+      id: '/_layout/incidents'
+      path: '/incidents'
+      fullPath: '/incidents'
+      preLoaderRoute: typeof LayoutIncidentsRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/admin': {
       id: '/_layout/admin'
       path: '/admin'
@@ -246,6 +284,8 @@ declare module '@tanstack/react-router' {
 
 interface LayoutRouteChildren {
   LayoutAdminRoute: typeof LayoutAdminRoute
+  LayoutBugsRoute: typeof LayoutBugsRoute
+  LayoutIncidentsRoute: typeof LayoutIncidentsRoute
   LayoutItemsRoute: typeof LayoutItemsRoute
   LayoutProjectsRoute: typeof LayoutProjectsRoute
   LayoutSettingsRoute: typeof LayoutSettingsRoute
@@ -255,6 +295,8 @@ interface LayoutRouteChildren {
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutAdminRoute: LayoutAdminRoute,
+  LayoutBugsRoute: LayoutBugsRoute,
+  LayoutIncidentsRoute: LayoutIncidentsRoute,
   LayoutItemsRoute: LayoutItemsRoute,
   LayoutProjectsRoute: LayoutProjectsRoute,
   LayoutSettingsRoute: LayoutSettingsRoute,

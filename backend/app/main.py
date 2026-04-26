@@ -31,3 +31,8 @@ if settings.all_cors_origins:
     )
 
 app.include_router(api_router, prefix=settings.API_V1_STR)
+
+# Prometheus metrics — expose /metrics for scraping
+from prometheus_fastapi_instrumentator import Instrumentator  # noqa: E402
+
+Instrumentator().instrument(app).expose(app, endpoint="/metrics", include_in_schema=True)
