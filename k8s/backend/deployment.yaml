@@ -1,0 +1,71 @@
+# Backend Deployment — 2 replicas với health probes
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: se359
+  labels:
+    app: backend
+    app.kubernetes.io/part-of: se359
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1          # Tạo thêm 1 pod mới trước khi xóa pod cũ
+      maxUnavailable: 0    # Không để pod nào unavailable → zero downtime
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      # Init container chạy migration trước khi backend start
+      initContainers:
+        - name: prestart
+          image: se359-backend:latest
+          imagePullPolicy: Never   # Dùng image local (kind load)
+          command: ["bash", "scripts/prestart.sh"]
+          envFrom:
+            - configMapRef:
+                name: app-config
+            - secretRef:
+                name: app-secret
+      containers:
+        - name: backend
+          image: se359-backend:latest
+          imagePullPolicy: Never   # Dùng image local (kind load)
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: app-config
+            - secretRef:
+                name: app-secret
+          # Liveness probe — pod chết thì restart
+          livenessProbe:
+            httpGet:
+              path: /api/v1/healthz
+              port: 8000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          # Readiness probe — pod chưa sẵn sàng thì không gửi traffic
+          readinessProbe:
+            httpGet:
+              path: /api/v1/readyz
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"

@@ -5,7 +5,6 @@ import type { IncidentPublic } from "@/client"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard"
-import { cn } from "@/lib/utils"
 import { IncidentActionsMenu } from "./IncidentActionsMenu"
 
 function CopyId({ id }: { id: string }) {

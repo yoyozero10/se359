@@ -1,0 +1,18 @@
+# Backend Service — ClusterIP (frontend và ingress kết nối qua đây)
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+  namespace: se359
+  labels:
+    app: backend
+    app.kubernetes.io/part-of: se359
+spec:
+  type: ClusterIP
+  selector:
+    app: backend
+  ports:
+    - port: 8000
+      targetPort: 8000
+      protocol: TCP
+      name: http

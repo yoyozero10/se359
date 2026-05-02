@@ -1,0 +1,15 @@
+# PersistentVolumeClaim cho PostgreSQL data
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pvc
+  namespace: se359
+  labels:
+    app: postgres
+    app.kubernetes.io/part-of: se359
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi

@@ -41,7 +41,7 @@ const formSchema = z.object({
   title: z.string().min(1, { message: "Title is required" }),
   description: z.string().optional(),
   project_id: z.string().min(1, { message: "Project ID is required" }),
-  severity: z.enum(["low", "medium", "high", "critical"]).default("medium"),
+  severity: z.enum(["low", "medium", "high", "critical"]),
 })
 
 type FormData = z.infer<typeof formSchema>
@@ -78,7 +78,7 @@ const AddBug = () => {
   })
 
   const onSubmit = (data: FormData) => {
-    mutation.mutate({ ...data, project_id: data.project_id } as BugCreate)
+    mutation.mutate(data as unknown as BugCreate)
   }
 
   return (

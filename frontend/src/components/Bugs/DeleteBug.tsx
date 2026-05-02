@@ -28,7 +28,7 @@ const DeleteBug = ({ id, onSuccess }: DeleteBugProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const queryClient = useQueryClient()
   const { showSuccessToast, showErrorToast } = useCustomToast()
-  const { handleSubmit } = useForm()
+  const { handleSubmit } = useForm<Record<string, never>>()
 
   const deleteBug = async (id: string) => {
     await BugsService.deleteBug({ id: id })

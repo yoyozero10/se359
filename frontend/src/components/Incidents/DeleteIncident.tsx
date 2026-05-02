@@ -28,7 +28,7 @@ const DeleteIncident = ({ id, onSuccess }: DeleteIncidentProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const queryClient = useQueryClient()
   const { showSuccessToast, showErrorToast } = useCustomToast()
-  const { handleSubmit } = useForm()
+  const { handleSubmit } = useForm<Record<string, never>>()
 
   const deleteIncident = async (id: string) => {
     await IncidentsService.deleteIncident({ id: id })

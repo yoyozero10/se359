@@ -1,0 +1,8 @@
+# Namespace riêng cho dự án SE359
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: se359
+  labels:
+    app.kubernetes.io/part-of: se359
+    project: devops-manager

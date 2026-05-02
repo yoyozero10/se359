@@ -1,0 +1,27 @@
+# ConfigMap — biến môi trường non-sensitive
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: se359
+  labels:
+    app.kubernetes.io/part-of: se359
+data:
+  DOMAIN: "localhost"
+  ENVIRONMENT: "local"
+  PROJECT_NAME: "SE359 DevOps Manager"
+  FRONTEND_HOST: "http://localhost:30080"
+  BACKEND_CORS_ORIGINS: "http://localhost,http://localhost:30080,http://localhost:5173"
+  POSTGRES_SERVER: "postgres-service"
+  POSTGRES_PORT: "5432"
+  POSTGRES_DB: "app"
+  EMAILS_FROM_EMAIL: "info@example.com"
+  SMTP_HOST: ""
+  SMTP_USER: ""
+  SMTP_TLS: "True"
+  SMTP_SSL: "False"
+  SMTP_PORT: "587"
+  SENTRY_DSN: ""
+  # Version info — sẽ được cập nhật bởi CI/CD
+  APP_VERSION: "1.0.0"
+  GIT_COMMIT_SHA: "local"
