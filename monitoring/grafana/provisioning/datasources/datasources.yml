@@ -1,0 +1,29 @@
+# =============================================================
+# Grafana Datasource Auto-Provisioning
+# =============================================================
+# Grafana tự động đăng ký Prometheus và Loki khi khởi động.
+# Không cần cấu hình thủ công qua UI.
+# =============================================================
+
+apiVersion: 1
+
+datasources:
+  # ── Prometheus — Metrics ──
+  - name: Prometheus
+    type: prometheus
+    access: proxy
+    url: http://prometheus:9090
+    isDefault: true
+    editable: false
+    jsonData:
+      timeInterval: '15s'
+      httpMethod: POST
+
+  # ── Loki — Logs ──
+  - name: Loki
+    type: loki
+    access: proxy
+    url: http://loki:3100
+    editable: false
+    jsonData:
+      maxLines: 1000

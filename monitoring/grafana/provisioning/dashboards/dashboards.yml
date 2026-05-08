@@ -1,0 +1,19 @@
+# =============================================================
+# Grafana Dashboard Auto-Provisioning
+# =============================================================
+# Tự động load dashboard JSON files từ thư mục dashboards/
+# =============================================================
+
+apiVersion: 1
+
+providers:
+  - name: 'SE359 Dashboards'
+    orgId: 1
+    folder: 'SE359'
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 30
+    allowUiUpdates: true
+    options:
+      path: /var/lib/grafana/dashboards
+      foldersFromFilesStructure: false

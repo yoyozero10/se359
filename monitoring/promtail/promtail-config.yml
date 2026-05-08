@@ -1,0 +1,41 @@
+# =============================================================
+# Promtail Configuration — Thu thập Docker container logs
+# =============================================================
+# Promtail đọc logs từ Docker socket và push lên Loki.
+# Tự động gắn label theo tên container và service.
+# =============================================================
+
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+
+scrape_configs:
+  # ── Thu thập logs từ tất cả Docker containers ──
+  - job_name: docker
+    docker_sd_configs:
+      - host: unix:///var/run/docker.sock
+        refresh_interval: 5s
+    relabel_configs:
+      # Lấy tên container làm label
+      - source_labels: ['__meta_docker_container_name']
+        regex: '/(.*)'
+        target_label: 'container'
+      # Lấy tên image
+      - source_labels: ['__meta_docker_container_image']
+        target_label: 'image'
+      # Lấy compose service name (nếu có)
+      - source_labels: ['__meta_docker_container_label_com_docker_compose_service']
+        target_label: 'service'
+      # Lấy compose project name
+      - source_labels: ['__meta_docker_container_label_com_docker_compose_project']
+        target_label: 'project'
+      # Chỉ thu thập container đang running
+      - source_labels: ['__meta_docker_container_running']
+        regex: 'true'
+        action: keep
